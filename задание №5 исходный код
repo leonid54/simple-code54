@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#include <locale>
+
+using namespace std;
+
+template<typename T>
+class List {
+public:
+    explicit List(T element) {
+        value = element;
+        next = nullptr;
+    }
+
+    List<T> * getNext() const {
+        return next;
+    }
+
+    List<T> *createNext(T element) {
+        auto *new_element = new List<T>(element);
+        next = new_element;
+
+        return new_element;
+    }
+
+    T value;
+
+private:
+    List<T> *next;
+};
+
+size_t countWords(List<string> *list, const string &str) {
+    size_t count = 0;
+    List<string> *current = list;
+
+    if (list->getNext() == nullptr)
+        return 0;
+
+    while (current != nullptr)
+    {
+        if (current->value == str && current->getNext() != nullptr)
+            count++;
+
+        current = current->getNext();
+    }
+
+    return count;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    List<string> *list = nullptr, *current = nullptr;
+    string str, first_str;
+
+    size_t count = 0;
+
+    while (true) {
+        while (true) {
+            cout << "Введите слово (чтобы закончить ввод слов нажмите Enter): " << endl;
+            getline(cin, str);
+
+            if (str.find(' ') == string::npos)
+                break;
+
+            cout << "Нужно вводить только слова!" << endl;
+        }
+
+        if (str.empty())
+        {
+            if (list == nullptr || list->getNext() == nullptr) {
+                cout << "Давайте запишем хотя бы два слова в список ;)" << endl;
+                continue;
+            }
+
+            break;
+        }
+
+        if (list == nullptr) {
+            list = new List<string>(str);
+            current = list;
+            first_str = str;
+
+            continue;
+        }
+
+        current = current->createNext(str);
+
+        if (str == first_str)
+            count++;
+    }
+
+    cout << "Колчиество слов, совпадающих с первым - " << count << endl;
+    cout << "Количество слов, совпадающих с последним - " << countWords(list, current->value) << endl;
+
+    return 0;
+}
