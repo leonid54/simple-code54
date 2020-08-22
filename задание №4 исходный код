@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <locale>
+
+using namespace std;
+
+template<typename T>
+class List {
+public:
+    explicit List(T element) {
+        value = element;
+        next = nullptr;
+    }
+
+    List<T> * getNext() const {
+        return next;
+    }
+
+    List<T> *createNext(T element) {
+        auto *new_element = new List<T>(element);
+        next = new_element;
+
+        return new_element;
+    }
+
+    T value;
+
+private:
+    List<T> *next;
+};
+
+bool checkCondition(List<string> *list) {
+    List<string> *current = list;
+    char letter;
+
+    if (list->value.empty() || list->getNext() == nullptr)
+        return false;
+
+    while (current->getNext() != nullptr)
+    {
+        letter = current->value[current->value.length() - 1];
+        current = current->getNext();
+
+        if (current->value.empty() || current->value[0] != letter)
+            return false;
+    }
+
+    return true;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+
+    List<string> *list = nullptr, *current = nullptr;
+    string str;
+
+    while (true) {
+        while (true) {
+            cout << "Введите слово (чтобы закончить ввод слов нажмите Enter): " << endl;
+            getline(cin, str);
+
+            if (str.find(' ') == string::npos)
+                break;
+
+            cout << "Нужно вводить только слова!" << endl;
+        }
+
+        if (str.empty())
+        {
+            if (list == nullptr || list->getNext() == nullptr) {
+                cout << "Давайте запишем хотя бы два слова в список ;)" << endl;
+                continue;
+            }
+
+            break;
+        }
+
+        if (list == nullptr) {
+            list = new List<string>(str);
+            current = list;
+            continue;
+        }
+
+        current = current->createNext(str);
+    }
+
+    if (checkCondition(list))
+        cout << "Данный список слов соответствует условию." << endl;
+    else
+        cout << "Данный список слов НЕ соответствует условию." << endl;
+
+    return 0;
+}
