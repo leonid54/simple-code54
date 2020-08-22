@@ -1,0 +1,122 @@
+#include <iostream>
+#include <string>
+#include <list>
+using namespace std;
+
+//задание №5
+
+template<typename T>
+class List
+{
+public:
+	List();
+	~List();
+	void push_back(T data);
+	int countWords(List<string> list);
+	T& operator[](const int index);
+
+	
+private:
+	template<typename T>
+	class Node
+	{
+	public:
+		T str;
+		T data;
+		Node* pNext;
+		Node(T data = T(), Node* pNext = nullptr,T str=T())
+		{
+			
+			this->data = data;
+			this->pNext = pNext;
+			this->str = str;
+		}
+	};
+	int Size;
+	Node<T>* head;
+
+};
+
+template<typename T>
+List<T>::List()
+{
+	Size = 0;
+	head = nullptr;
+}
+template<typename T>
+List<T>::~List()
+{
+}
+
+template<typename T>
+void List<T>::push_back(T data)
+{
+	if (head == nullptr)
+	{
+		head = new Node<T>(data);
+	}
+	else
+	{
+		Node<T>* current = this->head;
+		while (current->pNext != nullptr)
+		{
+			current = current->pNext;
+		}
+		current->pNext = new Node<T>(data);
+	}
+	Size++;
+}
+
+template<typename T>
+int List<T>::countWords(List<string> lst)
+{
+	int count = 0;
+	
+	if (head==nullptr)
+	{
+		return 0;
+	}
+		
+	Node<T>* current = this->head;
+	while (current != nullptr)
+	{
+		
+		if (current->data == lst[0] && current->pNext != nullptr)
+			count++;
+			current = current->pNext;
+	}
+
+	return count;
+}
+
+template<typename T>
+T& List<T>::operator[](const int index)
+{
+	int counter = 0;
+	Node<T>* current = this->head;
+	while (current != nullptr)
+	{
+		if (counter == index)
+		{
+			return current->data;
+		}
+		current = current->pNext;
+		counter++;
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	List<string> lst;
+	lst.push_back("оrдин");
+	lst.push_back("оrдин");
+	lst.push_back("пафдин");
+	lst.push_back("gwg");
+	lst.push_back("оrдин");
+
+	
+	cout<<lst.countWords(lst);
+	
+	return 0;
+}
