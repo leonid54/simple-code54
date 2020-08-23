@@ -93,22 +93,23 @@ T& List<T>::operator[](const int index)
 template<typename T>
 bool List<T>::print(List lst, List lst2)
 {
-	bool a;
-	for (int i = 0; i < 2; i++)
+	Node<T>* current = lst.head;
+	Node<T>* current2 = lst2.head;
+	while(current->pNext!=nullptr && current2->pNext != nullptr)
 	{
-		a = lst[i] == lst2[i];
-		if (lst[i] == lst2[i])
-		{
-			cout << i << " " << "элемент 1 списка равен" << " " << i << " " << "элементу второго списка" << endl;	
-		}
-		else
-		{
-			cout << i << " " << "элемент 1 списка не равен " << " " << i << " " << "элементу второго списка" << endl;
-
-		}
-		
+			if (current->data == current2->data)
+			{
+				current = current->pNext;
+				current2 = current2->pNext;
+				return true;
+			}
+			else
+			{	
+				current = current->pNext;
+				current2 = current2->pNext;
+				return false;
+			}
 	}
-	return a;
 }
 
 int main()
@@ -117,20 +118,39 @@ int main()
 	
 	List<int> lst;
 	List<int> lst2;
-
-
-	lst.push_back(5);
-	lst.push_back(10);
-	lst.push_back(15);
-
-	lst2.push_back(1);
-	lst2.push_back(3);
-
-	cout << lst.GetSize() << endl;
-	cout << lst2.GetSize() << endl;
-
 	
-	cout << lst.print(lst, lst2) << endl;
+	int n;
+	cout << "введите количество элементов в 1 списке:" << endl;
+	cin >> n;
+	int num;
+	while (n--)
+	{
+		cout << "введите элементы в 1 списке: " << endl;
+		cin >> num;
+		lst.push_back(num);
+	}
+	int n2;
+	cout << "введите количество элементов в 2 списке:" << endl;
+	cin >> n2;
+	while (n2--)
+	{
+		cout << "введите элементы в 2 списке: " << endl;
+		cin >> num;
+		lst2.push_back(num);
+	}
+
+	cout <<"количество элементов в 1 списке = "<< lst.GetSize() << endl;
+	cout << "количество элементов в 2 списке = " << lst2.GetSize() << endl;
+
+	if (lst.print(lst, lst2) == true)
+	{
+		cout << "true" << endl;
+	}
+	else
+	{
+		cout << "false" << endl;
+	}
+	
 
 
 	return 0;
