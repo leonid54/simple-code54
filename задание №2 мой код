@@ -111,7 +111,15 @@ bool List<T>::print(List lst, List lst2)
 			}
 	}
 }
-
+void ASSERT_FALSE (результат типа bool, string * caseName)
+{
+    если (истина == результат)
+    {
+        std :: cout << "case" << caseName << "НЕ прошло" << std :: endl;
+	возвращение;
+    }
+    std :: cout << "case" << caseName << "передано" << std :: endl;
+}
 int main()
 {
 	setlocale(LC_ALL, "ru");
