@@ -121,26 +121,43 @@ bool List<T>::print(List lst, List lst2)
 	return 0;
 }
 
+void ASSERT_FALSE(bool result, char * caseName)
+{
+    if(true == result)
+    {
+        std::cout << "case " << caseName << " NOT passed" << std::endl;
+	return;
+    }
+    std::cout << "case " << caseName << " passed" << std::endl;
+}
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
 	
-	List<int> lst;
-	List<int> lst2;
-
-
-	lst.push_back(5);
-	lst.push_back(10);
-	lst.push_back(15);
-
-	lst2.push_back(5);
-	lst2.push_back(10);
-
-	cout << lst.GetSize() << endl;
-	cout << lst2.GetSize() << endl;
-
+	{
+		List<int> lst;
+		List<int> lst2;
+		ASSERT_FALSE(lst == lst2, "Кейс, списки пустые");
+	}
 	
-	lst.print(lst, lst2);
+	{
+		List<int> lst;
+		List<int> lst2;
+		
+		lst2.push_back(5);
+		
+		ASSERT_FALSE(lst == lst2, "Кейс, список 1 пустой");
+	}
+	
+	{
+		List<int> lst;
+		List<int> lst2;
+		
+		lst.push_back(5);
+		
+		ASSERT_FALSE(lst == lst2, "Кейс, список 2 пустой");
+	}
 
 
 	return 0;
