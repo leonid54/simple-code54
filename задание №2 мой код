@@ -19,93 +19,82 @@ public:
 	bool operator==(const List & lst2)
 	{
 		Node<T>* current = lst2.head;
-		if (head == nullptr && current == nullptr)//списки пустые
-		{
-			return true;
-		}
-		if (head == nullptr || current == nullptr)//первый или второй список пустой
-		{
-			return false;
-		}
+		Node<T>* thisCurrent = head;
 		
-		while (head->pNext != nullptr && current->pNext != nullptr )//проверка равенства списков
+		while (current != nullptr && thisCurrent != nullptr )//проверка равенства списков
 		{
-			if (head->data == current->data)
+			if (thisCurrent->data == current->data)
 			{
-				head = head->pNext;
-			}
-			if (head->data != current->data)
-			{
-				current = current->pNext;
-				if (head->data != current->data)
-				{
-					return false;
-				}
-			}
-			else if(head->data == current->data)
-			{
+				thisCurrent = thisCurrent->pNext;
 				current = current->pNext;
 			}
 			else
 			{
-				return false;
+			    return false;
 			}
-			
 		}
-		if (head->pNext == nullptr && current->pNext == nullptr && head->data == current->data)//проверка равенства списков(продолжение)
+		
+		if (thisCurrent == nullptr && current == nullptr)
 		{
 			return true;
 		}
-		if (head->pNext == nullptr && current->pNext == nullptr && head->data != current->data)
-		{
-			return true;
-		}
-		if (current->pNext == nullptr)
-		{
-			head = head->pNext;
-			if (head->data == current->data)
-			{
-				return true;
-			}
-		}
+		
+		return false;
 		
 	}
 	
 private:
-	template<typename T>
+	template<typename J>
 	class Node
 	{
 	public:
 		Node* pNext;
-		T data;
-		Node(T data = T(), Node* pNext = nullptr)
+		J data;
+		Node(J data = J(), Node* pNext = nullptr)
 		{
 			this->data = data;
 			this->pNext = pNext;
 		}
 	};
-	int Size;
-	Node<T>* head;
+	int Size = 0;
+	Node<T>* head = nullptr;
 	
 };
 
 template<typename T>
 List<T>::List()
 {
-	Size = 0;
-	head = nullptr;
 }
 
 template<typename T>
 List<T>::~List()
 {
-
+    Node<T>* current = this->head;
+    Node<T>* next = nullptr;
+    
+    while(current != nullptr)
+    {
+        if(current->pNext != nullptr)
+        {
+            next = current->pNext;
+        }
+        else
+        {
+            next = nullptr;
+        }
+        delete current;
+        current = nullptr;
+        if(next != nullptr)
+        {
+            current = next;
+        }
+    }
 }
 
 template<typename T>
 void List<T>::push_back(T data)
 {
-	if (head== nullptr)
+	if (head == nullptr)
 	{
 		head = new Node<T>(data);
 	}
@@ -115,64 +104,22 @@ void List<T>::push_back(T data)
 		while (current->pNext != nullptr)
 		{
 			current = current->pNext;
-			
 		}
-		current->pNext = new Node<T>(data);
-		
-	}
-	/*cout << data << endl;*/
-	Size++;
-}
-
-template<typename T>
-T& List<T>::operator[](const int index)
-{
-	int counter=0;
-	Node<T>* current = this->head;
-	while (current!=nullptr)
-	{
-		if (counter == index)
-		{
-			return current->data;
-		}
-		current = current->pNext;
-		counter++;
+		current->pNext = new Node<T>(data);	
 	}
 	
+	Size++;
 }
-
-template<typename T>
-bool List<T>::print(List lst, List lst2)
-{
-	Node<T>* current = lst.head;
-	Node<T>* current2 = lst2.head;
-	while(current->pNext!=nullptr && current2->pNext != nullptr)
-	{
-			if (current->data == current2->data)
-			{
-				current = current->pNext;
-				current2 = current2->pNext;
-				return true;
-			}
-			else
-			{	
-				current = current->pNext;
-				current2 = current2->pNext;
-				return false;
-			}
-	}
-}
-
 
 
 void ASSERT_TRUE(bool result, const char * caseName)
 {
 	if (true == result)
 	{
-		cout << "case " << caseName << " passed" << endl;
+		cout << caseName << " passed" << endl;
 	}
 	else
-    cout << "case " << caseName << " NOT passed" << endl;
+    cout << caseName << " NOT passed" << endl;
 }
 
 void ASSERT_FALSE(bool result, const char* caseName)
@@ -182,40 +129,20 @@ void ASSERT_FALSE(bool result, const char* caseName)
 		cout << "case " << caseName << " NOT passed" << endl;
 	}
 	else
-		cout << "case " << caseName << " passed" << endl;
+	cout << "case " << caseName << " passed" << endl;
 }
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
 	
-		/*List<int> lst;
-		List<int> lst2;
-
-		int n;
-		cout << "введите количество элементов в 1 списке:" << endl;
-		cin >> n;
-		int num;
-		while (n--)
-		{
-			cout << "введите элементы в 1 списке: " << endl;
-			cin >> num;
-			lst.push_back(num);
-		}
-		int n2;
-		cout << "введите количество элементов в 2 списке:" << endl;
-		cin >> n2;
-		while (n2--)
-		{
-			cout << "введите элементы в 2 списке: " << endl;
-			cin >> num;
-			lst2.push_back(num);
-		}*/
 	{
 		List<int> lst;
 		List<int> lst2;
 
 		ASSERT_TRUE(lst == lst2, "Кейс, списки пустые");
 	}
+	
 	{
 		List<int> lst;
 		List<int> lst2;
@@ -224,6 +151,7 @@ int main()
 
 		ASSERT_FALSE(lst == lst2, "Кейс, список 1 пустой");
 	}
+	
 	{
 		List<int> lst;
 		List<int> lst2;
@@ -231,6 +159,7 @@ int main()
 		lst.push_back(10);
 		ASSERT_FALSE(lst == lst2, "Кейс, список 2 пустой");
 	}
+	
 	{
 		List<int> lst;
 		List<int> lst2;
@@ -241,6 +170,7 @@ int main()
 		lst2.push_back(10);
 		ASSERT_TRUE(lst == lst2, "Кейс, списки равны");
 	}
+	
 	{
 		List<int> lst;
 		List<int> lst2;
@@ -251,6 +181,7 @@ int main()
 		lst2.push_back(10);
 		ASSERT_FALSE(lst == lst2, "Кейс, списки не равны, отличается первый");
 	}
+	
 	{
 		List<int> lst;
 		List<int> lst2;
@@ -259,22 +190,43 @@ int main()
 		lst.push_back(10);
 		lst2.push_back(20);
 		lst2.push_back(10);
-		ASSERT_TRUE(lst == lst2, "Кейс, списки не равны, отличается второй");
+		ASSERT_FALSE(lst == lst2, "Кейс, списки не равны, отличается второй");
 	}
-
-	/*cout <<"количество элементов в 1 списке = "<< lst.GetSize() << endl;
-	cout << "количество элементов в 2 списке = " << lst2.GetSize() << endl;*/
-
-	/*if (lst.print(lst, lst2) == true)
-	{
-		cout << "true" << endl;
-	}
-	else
-	{
-		cout << "false" << endl;
-	}*/
 	
+	{
+		List<int> lst;
+		List<int> lst2;
 
+		lst.push_back(10);
+		lst2.push_back(10);
+		lst2.push_back(10);
+		ASSERT_FALSE(lst == lst2, "Кейс, списки разной длинны, первый короче");
+	}
+	
+		{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(10);
+		lst.push_back(10);
+		lst2.push_back(10);
+		ASSERT_FALSE(lst == lst2, "Кейс, списки разной длинны, второй короче");
+	}
+	
+	{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(11);
+		lst.push_back(12);
+		lst.push_back(10);
+		lst.push_back(10);
+		lst2.push_back(13);
+		lst2.push_back(14);
+		lst2.push_back(10);
+		lst2.push_back(10);
+		ASSERT_FALSE(lst == lst2, "Кейс, списки одинаковой длинны, в списках равны последние 2 элемента");
+	}
 
 	return 0;
 }
