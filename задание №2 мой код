@@ -16,9 +16,60 @@ public:
 	int GetSize() { return Size; }//размер списка
 	T& operator[](const int index);//функция проверки любого элемента списка
 	bool print(List lst, List lst2);//функция проверки равенства элементов двух списков
-	
-
-	
+	bool operator==(const List & lst2)
+	{
+		Node<T>* current = lst2.head;
+		if (head == nullptr && current == nullptr)//списки пустые
+		{
+			return true;
+		}
+		if (head == nullptr || current == nullptr)//первый или второй список пустой
+		{
+			return false;
+		}
+		
+		while (head->pNext != nullptr && current->pNext != nullptr )//проверка равенства списков
+		{
+			if (head->data == current->data)
+			{
+				head = head->pNext;
+			}
+			if (head->data != current->data)
+			{
+				current = current->pNext;
+				if (head->data != current->data)
+				{
+					return false;
+				}
+			}
+			else if(head->data == current->data)
+			{
+				current = current->pNext;
+			}
+			else
+			{
+				return false;
+			}
+			
+		}
+		if (head->pNext == nullptr && current->pNext == nullptr && head->data == current->data)//проверка равенства списков(продолжение)
+		{
+			return true;
+		}
+		if (head->pNext == nullptr && current->pNext == nullptr && head->data != current->data)
+		{
+			return true;
+		}
+		if (current->pNext == nullptr)
+		{
+			head = head->pNext;
+			if (head->data == current->data)
+			{
+				return true;
+			}
+		}
+		
+	}
 	
 private:
 	template<typename T>
@@ -111,53 +162,117 @@ bool List<T>::print(List lst, List lst2)
 			}
 	}
 }
-void ASSERT_FALSE (результат типа bool, string * caseName)
+
+
+
+void ASSERT_TRUE(bool result, const char * caseName)
 {
-    если (истина == результат)
-    {
-        std :: cout << "case" << caseName << "НЕ прошло" << std :: endl;
-	возвращение;
-    }
-    std :: cout << "case" << caseName << "передано" << std :: endl;
+	if (true == result)
+	{
+		cout << "case " << caseName << " passed" << endl;
+	}
+	else
+    cout << "case " << caseName << " NOT passed" << endl;
+}
+
+void ASSERT_FALSE(bool result, const char* caseName)
+{
+	if (true == result)
+	{
+		cout << "case " << caseName << " NOT passed" << endl;
+	}
+	else
+		cout << "case " << caseName << " passed" << endl;
 }
 int main()
 {
 	setlocale(LC_ALL, "ru");
 	
-	List<int> lst;
-	List<int> lst2;
-	
-	int n;
-	cout << "введите количество элементов в 1 списке:" << endl;
-	cin >> n;
-	int num;
-	while (n--)
+		/*List<int> lst;
+		List<int> lst2;
+
+		int n;
+		cout << "введите количество элементов в 1 списке:" << endl;
+		cin >> n;
+		int num;
+		while (n--)
+		{
+			cout << "введите элементы в 1 списке: " << endl;
+			cin >> num;
+			lst.push_back(num);
+		}
+		int n2;
+		cout << "введите количество элементов в 2 списке:" << endl;
+		cin >> n2;
+		while (n2--)
+		{
+			cout << "введите элементы в 2 списке: " << endl;
+			cin >> num;
+			lst2.push_back(num);
+		}*/
 	{
-		cout << "введите элементы в 1 списке: " << endl;
-		cin >> num;
-		lst.push_back(num);
+		List<int> lst;
+		List<int> lst2;
+
+		ASSERT_TRUE(lst == lst2, "Кейс, списки пустые");
 	}
-	int n2;
-	cout << "введите количество элементов в 2 списке:" << endl;
-	cin >> n2;
-	while (n2--)
 	{
-		cout << "введите элементы в 2 списке: " << endl;
-		cin >> num;
-		lst2.push_back(num);
+		List<int> lst;
+		List<int> lst2;
+
+		lst2.push_back(5);
+
+		ASSERT_FALSE(lst == lst2, "Кейс, список 1 пустой");
+	}
+	{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(10);
+		ASSERT_FALSE(lst == lst2, "Кейс, список 2 пустой");
+	}
+	{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(10);
+		lst.push_back(10);
+		lst2.push_back(10);
+		lst2.push_back(10);
+		ASSERT_TRUE(lst == lst2, "Кейс, списки равны");
+	}
+	{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(20);
+		lst.push_back(10);
+		lst2.push_back(10);
+		lst2.push_back(10);
+		ASSERT_FALSE(lst == lst2, "Кейс, списки не равны, отличается первый");
+	}
+	{
+		List<int> lst;
+		List<int> lst2;
+
+		lst.push_back(10);
+		lst.push_back(10);
+		lst2.push_back(20);
+		lst2.push_back(10);
+		ASSERT_TRUE(lst == lst2, "Кейс, списки не равны, отличается второй");
 	}
 
-	cout <<"количество элементов в 1 списке = "<< lst.GetSize() << endl;
-	cout << "количество элементов в 2 списке = " << lst2.GetSize() << endl;
+	/*cout <<"количество элементов в 1 списке = "<< lst.GetSize() << endl;
+	cout << "количество элементов в 2 списке = " << lst2.GetSize() << endl;*/
 
-	if (lst.print(lst, lst2) == true)
+	/*if (lst.print(lst, lst2) == true)
 	{
 		cout << "true" << endl;
 	}
 	else
 	{
 		cout << "false" << endl;
-	}
+	}*/
 	
 
 
