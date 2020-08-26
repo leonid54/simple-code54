@@ -1,0 +1,168 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+class List
+{
+public:
+	List();
+	~List();
+	void push_back(T data);
+	void function_list_in(List<int> lst, List<int> lst2,List<int> lst3);
+private:
+	template <typename T>
+	class Node
+	{
+	public:
+		T data;
+		Node* pNext;
+		Node(T data = T(), Node* pNext = nullptr)
+		{
+			this->data = data;
+			this->pNext = pNext;
+		}
+	};
+	Node<T>* head;
+	int Size;
+};
+template <typename T>
+List<T>::List()
+{
+	Size = 0;
+	head = nullptr;
+}
+template <typename T>
+List<T>::~List()
+{
+	
+}
+
+template<typename T>
+void List<T>::push_back(T data)
+{
+	if (head == nullptr)
+	{
+		head = new Node<T>(data);
+	}
+	else
+	{
+		Node<T>* current = this->head;
+		while (current->pNext != nullptr)
+		{
+			current = current->pNext;
+		}
+		current->pNext = new Node<T>(data);
+	}
+	Size++;
+	
+
+}
+
+template<typename T>
+void List<T>::function_list_in(List<int> lst, List<int> lst2, List<int> lst3)
+{
+	int count = 0;
+	Node<T>* list1 = lst.head;
+	Node<T>* list2 = lst2.head;
+	while (list1->pNext != nullptr && list2->pNext != nullptr)
+	{
+		if (list1->data == list2->data)
+		{
+			count++;
+			list1 = list1->pNext;
+			list2 = list2->pNext;
+		}
+		else
+		{
+			list1 = list1->pNext;
+			list2 = list2->pNext;
+		}
+	}
+	if (list2->pNext == nullptr && list1->data == list2->data)
+	{
+		count++;
+		Node<T>* bigger1 = lst.head;
+		if (lst3.head == nullptr)
+		{
+			lst3.head = new Node<T>(bigger1->data);
+		}
+		while(lst.Size-lst2.Size != 0)
+		{
+			Node<T>* current = lst3.head;
+			while (current->pNext != nullptr)
+			{
+				current = current->pNext;
+				bigger1 = bigger1->pNext;
+
+			}
+			current->pNext = new Node<T>(bigger1->data);
+			lst.Size--;
+		}
+	}
+	if (list1->pNext == nullptr && list1->data == list2->data)
+	{
+		count++;
+		Node<T>* bigger2 = lst2.head;
+		if (lst3.head == nullptr)
+		{
+			lst3.head = new Node<T>(bigger2->data);
+		}
+		else
+		{
+			Node<T>* current = lst3.head;
+			while (current->pNext != nullptr)
+			{
+				current = current->pNext;
+				bigger2 = bigger2->pNext;
+			    
+			}
+			current->pNext = new Node<T>(bigger2->data);
+		}
+		
+	}
+	if (count == lst2.Size)
+	{
+		cout << "второй список входит в первый" << endl;
+	}
+	else if (count == lst.Size)
+	{
+		cout << "первый список входит во второй" << endl;
+	}
+	else if (lst.Size == lst2.Size)
+	{
+		cout << "списки одинаковые" << endl;
+	}
+	else
+	{
+		cout << "списки не входят друг в друга" << endl;
+
+	}
+	
+}
+
+
+
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	List<int> lst;
+	List<int> lst2;
+	List<int> lst3;
+	lst.push_back(1);
+	lst.push_back(2);
+	lst.push_back(3);
+	lst.push_back(4);
+	lst2.push_back(1);
+	lst2.push_back(2);
+	lst2.push_back(3);
+	
+
+
+	lst.function_list_in(lst, lst2,lst3);
+
+
+	return 0;
+}
