@@ -46,7 +46,26 @@ List<T>::List()
 template<typename T>
 List<T>::~List()
 {
+Node<T>* current = this->head;
+	Node<T>* next = nullptr;
 
+	while (current != nullptr)
+	{
+		if (current->pNext != nullptr)
+		{
+			next = current->pNext;
+		}
+		else
+		{
+			next = nullptr;
+		}
+		delete current;
+		current = nullptr;
+		if (next != nullptr)
+		{
+			current = next;
+		}
+	}
 }
 
 template<typename T>
@@ -71,34 +90,17 @@ void List<T>::push_back(T data)
 	Size++;
 }
 
-template<typename T>
-T& List<T>::operator[](const int index)
-{
-	int counter = 0;
-	Node<T>* current = this->head;
-	while (current != nullptr)
-	{
-		if (counter == index)
-		{
-			return current->data;
-		}
-		current = current->pNext;
-		counter++;
-	}
 
-}
-template<typename T>
+
+
+ttemplate<typename T>
 int List<T>::Counter(List<string>* lst)
 {
 	int n = 0;
 	Node<T>* current = this->head;
 
-	if (current == nullptr)
-	{
-		return 0;
-	}
 	while (current != nullptr) { // пока есть элементы списка
-		if (current->data[0] == current->data[(current->data.length()) - 1]) // сравниваем 1 и последний символ
+		if (!current->data.empty() && current->data.front() == current->data.back()) // сравниваем 1 и последний символ
 			n++;
 		current = current->pNext; // переход на следующий узел
 	}
