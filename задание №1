@@ -108,7 +108,7 @@ void List<T>::function_list_in(List<int> lst, List<int> lst2, List<int> lst3)
 		{
 			lst3.head = new Node<T>(bigger2->data);
 		}
-		else
+		while(lst2.Size-lst.Size != 0)
 		{
 			Node<T>* current = lst3.head;
 			while (current->pNext != nullptr)
@@ -118,6 +118,7 @@ void List<T>::function_list_in(List<int> lst, List<int> lst2, List<int> lst3)
 			    
 			}
 			current->pNext = new Node<T>(bigger2->data);
+			lst2.Size--;
 		}
 		
 	}
