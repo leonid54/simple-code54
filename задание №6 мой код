@@ -1,8 +1,6 @@
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#include <string>
+
 using namespace std;
 
 template <typename T>
@@ -13,7 +11,7 @@ public:
 	~List();
 	void push_back(T data);
 	T& operator [](const int index);
-	bool Alphabet_List(List lst);
+	void Alphabet_List(List lst);
 
 private:
 	template <typename T>
@@ -45,7 +43,7 @@ List<T>::~List()
 template<typename T>
 void List<T>::push_back(T data)
 {
-	cin >> data;
+	
 	if (head == nullptr)
 	{
 		head = new Node<T>(data);
@@ -63,47 +61,39 @@ void List<T>::push_back(T data)
 	cout << data << endl;
 	Size++;
 }
-template<typename T>
-T& List<T>::operator[](const int index)
-{
-	int count = 0;
-	Node<T>* current = this->head;
-	while (current != nullptr)
-	{
-		if (count == index)
-		{
-			return current->data;
-		}
-		current = current->pNext;
-		count++;
-	}
-}
-template<typename T>
-bool List<T>::Alphabet_List(List lst)
-{
-	Node<T>* current = this->head;
-	int i = 0;	//Счётчик
 
-	while (current->pNext != nullptr) //Пока в списке есть элементы
+template<typename T>
+void List<T>::Alphabet_List(List lst)
+{
+	Node<T>* current = this->head;
+	int i = 1;	//Счётчик
+	char letter;
+	while (current->pNext != nullptr && !current->data.empty()) //Пока в списке есть элементы
 	{
-		
-			if (lst[i] < lst[i + 1])	//Если буква первого элемента по алфавиту стоит ПЕРЕД буквой второго элемента, то проверяем следующие элементы списка
-			{
-				current = current->pNext;
-			}
-			else if (lst[i] == lst[i + 1])	//Если первые буквы равны, проверяем следующие
-			{
-				current = current->pNext;
-			}
-			else	//Если буква первого элемента по алфавиту стоит ПОСЛЕ буквой второго элемента, то список не упорядочен по алфавиту
-			{
-				return 0;
-			}
-		
+		letter = current->data.front();
+		current = current->pNext;
+		if (letter < current->data.front())
+		{
 			i++;
-		
+		}
+		else if (letter == current->data.front())
+		{
+			i++;
+		}
+		else
+		{
+			i--;
+		}
 	}
-	return 1;
+	if (i == Size)
+	{
+		cout << "Все элементы списка упорядочены по алфавиту" << endl;
+	}
+	else
+	{
+		cout << "Все элементы списка НЕ упорядочены по алфавиту" << endl;
+	}
+
 }
 
 
@@ -112,20 +102,13 @@ int main()
 	setlocale(LC_ALL, "ru");
 
 	List<string> lst;
-	for (int i = 0; i < 5; i++)
-	{
-		lst.push_back("i");
-	}
-	/*lst.push_back("а");*/
-	/*lst.push_back("а"); 
-	lst.push_back("б");
-	lst.push_back("б");*/
-	cout << lst.Alphabet_List(lst) << endl;
 	
-	if (lst.Alphabet_List(lst) == 1)
-		printf("Слова упорядочены по алфавиту");
-	else
-		printf("Слова упорядочены НЕ по алфавиту");
+	lst.push_back("алфавит");
+	lst.push_back("упорядочен"); 
+	lst.push_back("я уверен!");
 
+	
+	lst.Alphabet_List(lst);
+	
 	return 0;
 }
