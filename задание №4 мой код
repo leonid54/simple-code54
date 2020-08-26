@@ -74,35 +74,111 @@ void List<T>::push_back(T data)
 template<typename T>
 void List<T>::checkCondition(List<string>* list)
 {
+	#include <iostream>
+#include <string>
+using namespace std;
+
+//задание №4
+
+template<typename T>
+class List
+{
+public:
+	List();
+	~List();
+	void push_back(T data);//вывод списка
+	int GetSize() { return Size; }//размер списка
+	void checkCondition(List<string>* list);/*функция проверки каждого следующего элемента на начало 
+	слова с последней буквы предыдущего*/
+
+
+	
+private:
+	template<typename T>
+	class Node
+	{
+	public:
+		Node* pNext;
+		T data;
+		Node(T data = T(), Node* pNext = nullptr)
+		{
+			this->data = data;
+			this->pNext = pNext;
+		}
+	};
+	int Size;
+	Node<T>* head;
+
+};
+
+template<typename T>
+List<T>::List()
+{
+	Size = 0;
+	head = nullptr;
+}
+
+template<typename T>
+List<T>::~List()
+{
+
+}
+
+template<typename T>
+void List<T>::push_back(T data)
+{
+	
+	if (head == nullptr)
+	{
+		head = new Node<T>(data);
+	}
+	else
+	{
+		Node<T>* current = this->head;
+		while (current->pNext != nullptr)
+		{
+			current = current->pNext;
+
+		}
+		current->pNext = new Node<T>(data);
+
+	}
+	/*cout << data << endl;*/
+	Size++;
+}
+
+template<typename T>
+void List<T>::checkCondition(List<string>* list)
+{
 	int i = Size;
-	Node<T>* current = this->head;
-
 	char letter;
-
+	Node<T>* current = this->head;
 	if (current->data.empty() || current->pNext == nullptr)
 	{
 		Size--;
+	    
 	}
-		while (current->pNext != nullptr)
-		{
-			letter = current->data[current->data.length() - 1];
-			current = current->pNext;
-
-			if (current->data.empty() || current->data[0] != letter)
-			{
-				Size--;
-			}
-				
-		}
-		if (Size == i)
-		{
-			cout << "Данный список слов соответствует условию." << endl;
-		}
-		else
-		{
-			cout << "Данный список слов НЕ соответствует условию." << endl;
-		}
+	
+	while (current->pNext != nullptr)
+	{
+		letter = current->data.back();
+		current = current->pNext;
 		
+		if (letter != current->data.front() || current->data.empty())
+		{
+			Size--;
+		}
+	}
+	
+	if (i == Size)
+	{
+		cout << "Cписок удовлетворяет условию" << endl;
+	}
+	else
+	{
+		cout << "Cписок НЕ удовлетворяет условию" << endl;
+	}
+
 	
 }
 
@@ -112,9 +188,11 @@ int main()
 	List<string> list;
 	list.push_back("ото");
 	list.push_back("ото");
-	list.push_back("кпуп");
+	list.push_back("ото");
 
 	list.checkCondition(&list);
 
 	return 0;
 }
+		
+	
