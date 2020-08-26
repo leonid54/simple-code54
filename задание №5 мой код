@@ -71,7 +71,7 @@ template<typename T>
 int List<T>::countWords(List<string> lst)
 {
 	int count = 0;
-	
+	int i=Size-1;
 	if (head==nullptr)
 	{
 		return 0;
@@ -81,7 +81,7 @@ int List<T>::countWords(List<string> lst)
 	while (current != nullptr)
 	{
 		
-		if (current->data == lst[0] && current->pNext != nullptr)
+		if (current->data == lst[i] && current->pNext != nullptr)//lst[0] , если с 1 элементом работаем!
 			count++;
 			current = current->pNext;
 	}
