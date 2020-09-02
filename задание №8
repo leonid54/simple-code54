@@ -11,6 +11,7 @@ public:
 	void push_back(T data);
 	T& operator[](const int index);
 	void turn_HEAD(List<int> lst);
+	void printList(List<int> lst);
 	
 private:
 	template <typename T>
@@ -81,31 +82,53 @@ T& List<T>::operator[](const int index)
 template<typename T>
 void List<T>::turn_HEAD(List<int> lst)
 {
-	Node<T>* current = this->head;
-	Node<T>* last = this->head;
+	Node<T>* current = lst.head;
+	Node<T>* end = current;
+	Node<T>* head = new Node<T>;
+
 	while (current->pNext != nullptr)
 	{
-		
+		current = current->pNext;
+	}
+	head->data = current->data;
+	current->data = end->data;
+	end->data = head->data;
+	delete head;
+	//List* p = head;
+	//List* first = p; 
+	//List* tmp = new List; 
+	//while (p->next != NULL)   ВЗЯЛ ЭТОТ КОД С ПРИМЕРА ЗАДАНИЯ!!!!!!!
+	//	p = p->next;
+	//tmp->value = p->value;     
+	//p->value = first->value;   
+	//first->value = tmp->value; 
+	//delete tmp;
+
+}
+
+template<typename T>
+void List<T>::printList(List<int> lst)
+{
+	Node<T>* current = lst.head;
+	while (current->pNext != nullptr)
+	{
+		cout << current->data << endl;
 		current = current->pNext;
 	}
 	if (current->pNext == nullptr)
 	{
-		current->pNext = last;
-		current = current->pNext;
+		cout << current->data << endl;
 	}
-	while (last->pNext != )
-	{
-		last = last->pNext;
-		current->pNext= last->pNext;
-	}
-	
+
 }
+
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
 
 	List<int> lst;
+
 	lst.push_back(1);
 	lst.push_back(2);
 	lst.push_back(3);
@@ -115,11 +138,8 @@ int main()
 		cout << lst[i] << endl;
 	}
 	lst.turn_HEAD(lst);
-	for (int i = 0; i < lst.Size; i++)
-	{
-		cout << lst[i] << endl;
-	}
-
+	lst.printList(lst);
+		
 
 
 	return 0;
