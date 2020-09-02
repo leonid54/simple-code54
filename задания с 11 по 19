@@ -1,0 +1,534 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//Задача №11
+
+//class samp
+//{
+//public:
+//	
+//	samp(double a =0, double b = 0)
+//	{
+//		this->a = a;
+//		this->b = b;
+//		cnt++;
+//	}
+//
+//	double get_a()
+//	{
+//		return a;
+//		
+//	}
+//
+//	void print()
+//	{
+//		cout << "a = " << a << "b = " << b << "cnt = " << cnt << endl;
+//	}
+//	
+//	~samp()
+//	{
+//		cnt--;
+//	}
+//private:
+//	double a;
+//	double b;
+//	static int cnt;
+// };
+//int samp::cnt=0;
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//
+//	samp arr[3] = {1,2,3};
+//	for (int i = 0; i < 3; i++)
+//	{
+//		cout << arr[i].get_a() << endl;
+//	}
+//
+//	
+//	samp *value = new samp(1.0, 2.1);
+//	value->print();
+//	delete value;
+//	
+//	return 0;
+//}
+
+//задача №12
+
+//class vector
+//{
+//public:
+//	vector(double x= 0, double y = 0)
+//	{
+//		this->x = x;
+//		this->y = y;
+//	}
+//	double getX()
+//	{
+//		return x;
+//	}
+//
+//	
+//	void print()
+//	{
+//		cout << "x = " << x << " " << "y = " << y << endl;
+//	}
+//
+//private:
+//	double x;
+//	double y;
+//
+//};
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//
+//	vector* value = new vector[5];
+//	for (int i = 0; i < 5; i++)
+//	{
+//		cout << value[i].getX()<< endl;
+//	}
+//	vector a(1.3, 2.8);
+//	a.print();
+//
+//	vector b(5.0, 6.4);
+//	b.print();
+//
+//	vector c(2.1, 3.8);
+//	c.print();
+//	delete[] value;
+//	return 0;
+//}
+
+////задача №13
+
+//class vector
+//{
+//
+//public:
+//	friend bool operator >=(const vector& other,const vector & other2);
+//	vector(double x, double y, double z)
+//	{
+//		this->x = x;
+//		this->y = y;
+//		this->z = z;
+//	}
+//	double getX()
+//	{
+//		return x;
+//	}
+//	double getX2()
+//	{
+//		return x;
+//	}
+//	/*bool operator >=(const vector& other)
+//	{
+//		return (this->x >= other.x && this->y >= other.y && this->z >= other.z);
+//	}*/
+//private:
+//	
+//	double x;
+//	double y;
+//	double z;
+//};
+//
+//bool operator >=(const vector& other, const vector& other2)
+//{
+//	return (other.x >= other2.x && other.y >= other2.y && other.z >= other2.z);
+//}
+//
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//	vector a(1.0, 2.0, 3.0);
+//	vector b(7.0, 8.0, 9.0);
+//	vector c(4.0, 5.0, 6.0);
+//	bool result = a >= b;
+//	cout << result << endl;
+//
+//	return 0;
+//}
+
+//задача №14
+
+//class box
+//{
+//public:
+//	enum COLOR
+//	{
+//		
+//		RED,
+//		GREEN
+//	};
+//	box(int w, int d, int v, COLOR color)
+//	{
+//	
+//		this->w = w;
+//		this->d = d;
+//		this->v = v;
+//		this->color = color;
+//		
+//	}
+//	box(const box & othercolor)
+//	{
+//		this->w = othercolor.w;
+//		this->d = othercolor.d;
+//		this->v = othercolor.v;
+//		
+//		this->color =GREEN;
+//		
+//	}
+//	
+//	void show()
+//	{
+//		cout << "ширина = " << w << " " << "длина = " << d << " " << "высота = " << v << endl;
+//		if ( this->color==RED )
+//		{
+//			cout << "цвет первой корбки: красный" << endl;
+//		}
+//		else
+//		{
+//			cout << "цвет второй корбки: зеленый" << endl;
+//		}
+//	}
+//	
+//private:
+//	
+//	
+//	int w;
+//	int d;
+//	int v;
+//	COLOR color;
+//	
+//};
+//
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//	
+//	box box1(2, 3, 8, box::RED );
+//	
+//	box box2(box1);
+//	box2.show();
+//	return 0;
+//}
+//
+
+//задача №15
+
+//class samp
+//{
+//public:
+//    void operator=(const samp & other)
+//	{
+//		this->a = other.a;
+//		this->b = other.b;
+//	}
+//	samp(int a, string b)
+//	{
+//		this->a = a;
+//		this->b = b;
+//	}
+//
+//	void print()
+//	{
+//		cout << a << endl << b << endl << endl;
+//	}
+//
+//
+//	~samp()
+//	{
+//
+//	}
+//private:
+//	int a;
+//	string b;
+//};
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//	
+//	samp bo[1] =
+//	{
+//		samp(1,"1")
+//
+//	};
+//	samp ob[3]=
+//	{
+//		samp(1,"one"),
+//		samp(2,"two"),
+//		samp(3,"three")
+//};
+//	bo[0] = ob[0];
+//	ob[0] = ob[2];
+//	ob[2] = bo[0];
+//	ob[0].print();
+//	ob[1].print();
+//	ob[2].print();
+//
+//	return 0;
+//}
+
+//задача №16
+
+//class vector
+//{
+//public:
+//	friend bool operator ==(const vector& this_, const vector& other);
+//	vector(double x, double y)
+//	{
+//		this->x = x;
+//		this->y = y;
+//	}
+//
+//private:
+//	double x;
+//	double y;
+//
+//};
+//
+//bool operator ==(const vector& this_, const vector& other)
+//{
+//	return (this_.x == other.x && this_.y == other.y);
+//}
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//
+//	vector a(10, 25);
+//	vector b(40, 5);
+//	vector c(25, 10);
+//
+//	bool E= fabs(a == b);
+//	cout << E << endl;
+//	bool G = fabs(a == c);
+//	cout << G << endl;
+//	bool K = fabs(b == c);
+//	cout << K << endl;
+//
+//	return 0;
+//
+//}
+
+//задача №17
+
+//class box
+//{
+//public:
+//	box()
+//	{
+//
+//	}
+//	void operator =(const box& other)
+//	{
+//		this->w = other.w;
+//		this->d = other.d;
+//		this->v = other.v;
+//		this->color = other.color;
+//	}
+//	box(int w, int d, int v, string color)
+//	{
+//		this->w = w;
+//		this->d = d;
+//		this->v = v;
+//		this->color = color;
+//	}
+//
+//	void print()
+//	{
+//		cout << w <<endl<< d <<endl<< v <<endl<< color << endl;
+//	}
+//	~box()
+//	{
+//		
+//	}
+//private:
+//	int w;
+//	int d;
+//	int v;
+//	string color;
+//};
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//	vector <box> vector1(1);
+//		vector1=
+//	{
+//		{1,1,1,"efefw"}
+//	};
+//	vector <box> a(5);a =
+//	{
+//		{1,2,3,"черный"},
+//		{4,5,6,"белый"},
+//		{7,8,9,"красный"},
+//		{10,11,12,"синий"},
+//		{13,14,15,"фиолетовый"}
+//
+//	};
+//	vector1[0] = a[0];
+//	a[0] = a[2];
+//	a[2] = vector1[0];
+//	for (int i = 0; i < a.size(); i++)
+//	{
+//		a[i].print();
+//	}
+//	return 0;
+//}
+
+//задача №18
+
+//class box
+//{
+//public:
+//	box()
+//	{
+//		cout << "Вызвался конструктор по умолчанию!!!" << endl;
+//	}
+//	box(int w, int d, int v)
+//	{
+//		cout << "Вызвался конструктор класса!!!" << endl;
+//		this->w = w;
+//		this->d = d;
+//		this->v = v;
+//
+//	}
+//	box(const box& other)
+//	{
+//		cout << "Вызвался конструктор копирования!!!" << endl;
+//		this->w = other.w;
+//		this->d = other.d;
+//		this->v = other.v;
+//	}
+//	void init(int w,int d,int v)
+//	{
+//		cout << "вызвалась функция init !!!" << endl;
+//		this->w = w;
+//		this->d = d;
+//		this->v = v;
+//	}
+//	int getW()
+//	{
+//		return w;
+//	}
+//	int getD()
+//	{
+//		return d;
+//	}
+//	int getV()
+//	{
+//		return v;
+//	}
+//	void volume(const box * object)
+//	{
+//		cout << "вызвалась функция volume !!!" << endl;
+//		
+//		cout <<"объем = "<< w * d * v << endl;
+//	}
+//
+//	~box()
+//	{
+//		cout << "Вызвался деструктор!!!" << endl;
+//	}
+//
+//private:
+//	int w;
+//	int d;
+//	int v;
+//
+//};
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//
+//	box a[4];
+//	//{
+//	//	/*box{0,1,2},*/ если не берем функицию init
+//	//	box{2,3,4},
+//	//	box{4,5,6},
+//	//	box{7,8,9}
+//	//};
+//	a[0].init(0, 1, 2);//если берем функцию init
+//	a[1].init(2, 3, 4);
+//	a[2].init(4, 5, 6);
+//	a[3].init(7, 8, 9);
+//	for (int i = 3; i >= 0; i--)
+//	{
+//		a[i].volume(&a[i]);
+//	}
+//
+//	return 0;
+//}
+
+//задача №19
+
+//class samp
+//{
+//public:
+//	samp()
+//	{
+//
+//	}
+//	
+//	samp(double a, string b)
+//	{
+//		this->a = a;
+//		this->b = b;
+//		
+//	}
+//	void init(double a, string b)
+//	{
+//		this->a = a;
+//		this->b = b;
+//	}
+//
+//	double getA()
+//	{
+//		return a;
+//	}
+//
+//	string getb()
+//	{
+//		return b;
+//	}
+//	
+//	void print(const samp & other)
+//	{
+//		this->a = other.a;
+//		this->b = other.b;
+//		cout << a << b << endl;
+//	}
+//
+//	~samp()
+//	{
+//
+//	}
+//private:
+//	double a;
+//	string b;
+//};
+//
+//int main()
+//{
+//	setlocale(LC_ALL, "ru");
+//
+//	vector<samp> samps(4);
+//	samps[0].init(1.1, "one");
+//	samps[1].init(2.2, "two");
+//	samps[2].init(3.3, "three");
+//	samps[3].init(4.4, "four");
+//	for (int i = 0; i < samps.size(); i++)
+//	{
+//		samps[i].print(samps[i]);
+//	}
+//	return 0;
+//}
+
