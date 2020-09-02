@@ -1,0 +1,235 @@
+#include <iostream>
+
+using namespace std;
+
+template <typename T>
+class List
+{
+public:
+	List();
+	~List();
+	void push_back(T data);
+	void Grad_List(List<int> L, List<int> lst, List<int> lst2);
+	void Sort_lst(List<int> lst);
+	void Sort_lst2(List<int> lst2);
+	T& operator[](const int index);
+	int Size;
+private:
+	template <typename T>
+	class Node
+	{
+	public:
+		T data;
+		Node* pNext;
+		Node(T data = T(), Node* pNext = nullptr)
+		{
+			this->data = data;
+			this->pNext = pNext;
+		}
+	};
+	Node<T>* head;
+	
+};
+template <typename T>
+List<T>::List()
+{
+	head = nullptr;
+	Size = 0;
+}
+template <typename T>
+List<T>::~List()
+{
+}
+
+template<typename T>
+void List<T>::Sort_lst2(List<int> lst2)
+{
+	int counter = 1;
+	Node<T>* current = lst2.head;
+	Node<T>* forward = new Node<T>;
+	
+	while (counter != lst2.Size)
+	{
+		Node<T>* current = lst2.head;
+		while (current->pNext != nullptr)
+		{
+			if (current->data > current->pNext->data)
+			{
+				forward->data = current->data;
+				current->data = current->pNext->data;
+				current->pNext->data = forward->data;
+				current = current->pNext;
+			}
+			else if (current->data < current->pNext->data)
+			{
+				counter++;
+				current = current->pNext;
+			}
+		}
+		if (counter != lst2.Size)
+		{
+			counter = 1;
+		}
+	}
+}
+
+template<typename T>
+T& List<T>::operator[](const int index)
+{
+	int count = 0;
+	Node<T>* current = this->head;
+	while (current->pNext != nullptr)
+	{
+		if (index == count)
+		{
+			return current->data;
+		}
+		count++;
+		current = current->pNext;
+	}
+}
+
+template<typename T>
+void List<T>::push_back(T data)
+{
+	if (head == nullptr)
+	{
+		head = new Node<T>(data);
+	}
+	else
+	{
+		Node<T>* current = this->head;
+		while (current->pNext != nullptr)
+		{
+			current = current->pNext;
+
+		}
+		current->pNext = new Node<T>(data);
+
+	}
+	Size++;
+}
+
+template<typename T>
+void List<T>::Grad_List(List<int> L, List<int> lst, List<int> lst2)
+{
+	int S = lst.Size + lst2.Size;
+	Node<T>* list1 = lst.head;
+	Node<T>* list2 = lst2.head;
+	while (list1->pNext != nullptr && list2->pNext != nullptr)
+	{	
+		if (list1->data > list2->data)
+		{
+			L.push_back(list2->data);
+			list2 = list2->pNext;
+			
+		}
+		else if(list1->data < list2->data)
+		{
+			L.push_back(list1->data);
+			list1 = list1->pNext;
+		}
+		else 
+		{
+			L.push_back(list1->data);
+			L.push_back(list2->data);
+			list1 = list1->pNext;
+			list2 = list2->pNext;
+		}
+	}
+	if(list1->pNext == nullptr && list1->data > list2->data)
+	{
+		while (list1->data > list2->data && list2->pNext != nullptr)
+		{
+			L.push_back(list2->data);
+			list2 = list2->pNext;
+		}
+	}
+	else if (list1->pNext == nullptr && list1->data < list2->data)
+	{
+		L.push_back(list1->data);
+	}
+	if (list2->pNext == nullptr && list1->data < list2->data)
+	{
+		while (list1->data < list2->data && list1->pNext != nullptr)
+		{
+			L.push_back(list1->data);
+			list1 = list1->pNext;
+		}
+	}
+	
+	else if (list2->pNext == nullptr && list1->data > list2->data)
+	{
+		L.push_back(list2->data);
+		L.push_back(list1->data);
+	}
+	for (int i = 0; i < L.Size; i++)
+	{
+		cout << "упорядоченые элементы 3-ого списка: " << L[i] << endl;
+	}
+}
+
+template<typename T>
+void List<T>::Sort_lst(List<int> lst)
+{
+	int counter = 1;
+	Node<T>* current = lst.head;
+	Node<T>* forward = new Node<T>; 
+	while (counter != lst.Size)
+	{
+		Node<T>* current = lst.head;
+		while (current->pNext != nullptr)
+		{
+			if (current->data > current->pNext->data)
+			{
+				forward->data = current->data;
+				current->data = current->pNext->data;
+				current->pNext->data = forward->data;
+				current = current->pNext;
+			}
+			else if ( current->data < current->pNext->data)
+			{
+				counter++;
+				current = current->pNext;
+			}
+		}
+		if (counter != lst.Size)
+		{
+			counter = 1;
+		}
+	}
+}
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	List<int> L;
+	List<int> lst;
+	List<int> lst2;
+
+	lst.push_back(1);
+	lst.push_back(2);
+	lst.push_back(13);
+	lst.push_back(15);
+	lst2.push_back(11);
+	lst2.push_back(8);
+	lst2.push_back(12);
+
+
+
+	lst.Sort_lst(lst);
+	lst2.Sort_lst2(lst2);
+	
+	for (int i = 0; i < lst.Size; i++)
+	{
+		cout <<"упорядоченые элементы 1-ого списка: "<< lst[i] << endl;
+	}
+	for (int i = 0; i < lst2.Size; i++)
+	{
+		cout << "упорядоченые элементы 2-ого списка: " << lst2[i] << endl;
+	}
+	lst.Grad_List(L,lst, lst2);
+
+
+	return 0;
+}
