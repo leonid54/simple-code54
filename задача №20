@@ -1,0 +1,50 @@
+#include <iostream>
+#include <list>
+using namespace std;
+
+class vector
+{
+public:
+	vector(int x, int y, int z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+	int get_X()
+	{
+		return x;
+	}
+	int get_Y()
+	{
+		return y;
+	}
+	int get_Z()
+	{
+		return z;
+	}
+	void print(const vector* other)
+	{
+		cout << x << endl << y << endl << z << endl;
+	}
+private:
+	int x;
+	int y;
+	int z;
+};
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+
+	list <vector> LST;
+
+	vector a(0,1,2);
+	vector b(4,5,6);
+	vector c(2,3,4);
+
+	a.print(&a);
+	b.print(&b);
+	c.print(&c);
+	return 0;
+}
